@@ -52,5 +52,13 @@
         modules = [raspberry-pi-nix.nixosModules.raspberry-pi raspberry-pi-nix.nixosModules.sd-image basic-config];
       };
     };
+    devShells.x86_64-linux.default = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in
+      pkgs.mkShell {
+        buildInputs = with pkgs; [
+          rpi-imager
+        ];
+      };
   };
 }
