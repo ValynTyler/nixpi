@@ -1,7 +1,6 @@
 {
-  description = "Bramble Test 5";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
   };
 
@@ -49,16 +48,18 @@
     nixosConfigurations = {
       bramble-test-5 = nixosSystem {
         system = "aarch64-linux";
-        modules = [raspberry-pi-nix.nixosModules.raspberry-pi raspberry-pi-nix.nixosModules.sd-image basic-config];
+        modules = [
+          raspberry-pi-nix.nixosModules.raspberry-pi
+          raspberry-pi-nix.nixosModules.sd-image
+          basic-config
+        ];
       };
     };
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
       pkgs.mkShell {
-        buildInputs = with pkgs; [
-          rpi-imager
-        ];
+        buildInputs = with pkgs; [rpi-imager];
       };
   };
 }
